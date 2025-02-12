@@ -69,8 +69,7 @@ To determine if a string is a complete string:
 ## Code Implementation (C++)
 
 ```cpp
-#include <bits/stdc++.h>
-using namespace std;
+#include <bits/stdc++.h> 
 
 struct TrieNode {
     TrieNode* children[26];
@@ -113,28 +112,32 @@ public:
         return true;
     }
 };
+string completeString(int n, vector<string> &a){
+    // Write your code here.
 
-string longestCompleteString(vector<string>& words) {
     Trie trie;
-    for (string word : words) {
+    for (string word : a) {
         trie.insert(word);
     }
     
-    string longest = "none";
-    for (string word : words) {
-        if (trie.isCompleteString(word)) {
-            if (word.length() > longest.length() || (word.length() == longest.length() && word < longest)) {
+    string longest = "";
+    for (string word : a) {
+        if (!trie.isCompleteString(word)) {
+            continue;
+        }
+        if (word.length() > longest.length()) {
+            longest = word;
+        }else if((word.length() == longest.length() && word < longest)){
                 longest = word;
-            }
+
         }
     }
-    return longest;
-}
 
-int main() {
-    vector<string> words = {"n", "ni", "nin", "ninj", "ninja", "ninjas"};
-    cout << longestCompleteString(words) << endl;
-    return 0;
+    if (longest.size() == 0) {
+      longest = "None";
+    }
+
+    return longest;
 }
 ```
 
